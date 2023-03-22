@@ -1,7 +1,9 @@
 import { Router } from "express";
+import CakesControllers from "../controllers/CakesControllers.js";
+import CakesValidation from "../middlewares/CakesValidation.js";
 
-const RouterCakes = Router();
+const CakesRouter = Router();
 
-RouterCakes.post("/cakes", );
+CakesRouter.post("/cakes", CakesValidation, CakesControllers);
 
-export default RouterCakes;
+export default CakesRouter;
