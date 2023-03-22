@@ -1,9 +1,11 @@
 import { Router } from "express";
+import OrdersControllers from "../controllers/OrdersControllers.js";
+import OrdersValidation from "../middlewares/OrdersValidation.js";
 
-const RouterOrders = Router();
+const OrdersRouter = Router();
 
-RouterOrders.post("/order", );
-RouterOrders.get("/orders", );
-RouterOrders.get("/orders/:id", );
+OrdersRouter.post("/order", OrdersValidation, OrdersControllers);
+OrdersRouter.get("/orders", );
+OrdersRouter.get("/orders/:id", );
 
-export default RouterOrders;
+export default OrdersRouter;

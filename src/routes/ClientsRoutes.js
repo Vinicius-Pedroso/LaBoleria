@@ -1,8 +1,10 @@
 import { Router } from "express";
+import ClientsControllers from "../controllers/ClientsControllers.js";
+import ClientValidation from "../middlewares/ClientsValidation.js";
 
-const RouterClients = Router();
+const ClientsRouter = Router();
 
-RouterClients.post("/clients", );
-RouterClients.get("/clients/:id/orders", );
+ClientsRouter.post("/clients", ClientValidation, ClientsControllers);
+ClientsRouter.get("/clients/:id/orders", );
 
-export default RouterClients;
+export default ClientsRouter;

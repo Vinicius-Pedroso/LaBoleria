@@ -4,7 +4,7 @@ import connectionDB from "../database.js";
 
 export default async function CakesValidation(req, res, next){
     const cakeData = req.body;
-    const {name, email, description, image} = cakeData;
+    const {name, email} = cakeData;
 
     const err = cakeSchema.validate(cakeData, {abortEarly: false});
 
