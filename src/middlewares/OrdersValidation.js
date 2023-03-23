@@ -32,9 +32,32 @@ export async function OrdersPostValidation(req, res, next){
 
 export async function OrdersGetValidation (req, res, next){
     const {date} = req.query.date;
+
+    try {
+
+        const verifyDate = connectionDB.query('SELECT * FROM orders WHERE createdAt = $1', [date])
+        if (!verifyDate){
+            return res.sendStatus(404)
+        }
+
+        next()
+    }catch(err){
+        return res.send(err).Status(500);
+    }
 }
 
 export async function OrdersIdValidation (req, res, next){
     const {id} = req.params.id;
 
+    try {
+
+        const verifyId = connectionDB.query('SELECT * FROM orders WHERE id = $1', [id])
+        if (!verifyId){
+            return res.sendStatus(404)
+        }
+        
+        next()
+    }catch(err){
+        return res.send(err).Status(500);
+    }
 }

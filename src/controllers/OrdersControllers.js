@@ -16,3 +16,41 @@ export async function OrdersPostControllers(req, res){
     }
 }
 
+export async function OrdersGetControllers(req, res){
+    const {date} = req.query.date;
+
+    try {
+
+        if(date){
+            const ordersByDate = connectionDB.query('SELECT * FROM orders WHERE createdAt = $1', [date])
+            //Query não feita
+
+            return res.send(ordersByDate).Status(200)
+        }
+
+        const allOrders = connectionDB.query('SELECT * FROM orders WHERE createdAt = $1', [date])
+        //Query não feita
+
+        return res.send(allOrders).Status(200)
+
+    }catch(err){
+        return res.send(err).Status(500);
+    }
+
+}
+
+export async function OrdersByIdControllers(req, res){
+    const {id} = req.params.id;
+
+    try {
+
+        const ordersById = connectionDB.query('SELECT * FROM orders WHERE id = $1', [id])
+        //Query não feita
+        
+        return res.sendStatus(404)
+
+    }catch(err){
+        return res.send(err).Status(500);
+    }
+    
+}

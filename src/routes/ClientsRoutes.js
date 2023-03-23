@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {ClientOrdersControllers, ClientsControllers} from "../controllers/ClientsControllers.js";
-import { ClientPostValidation, ClientOrdersValidation } from "../middlewares/ClientsValidation.js";
+import {ClientPostValidation, ClientOrdersValidation} from "../middlewares/ClientsValidation.js";
 
 const ClientsRouter = Router();
 
