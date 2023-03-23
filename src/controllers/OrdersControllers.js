@@ -22,14 +22,47 @@ export async function OrdersGetControllers(req, res){
     try {
 
         if(date){
-            const ordersByDate = connectionDB.query('SELECT * FROM orders WHERE createdAt = $1', [date])
-            //Query não feita
+            const ordersByDate = connectionDB.query(`SELECT 
+            clients.id AS "client.id", 
+            clients.name AS "client.name", 
+            clients.address AS "client.address", 
+            clients.phone AS "client.phone", 
+            cakes.id AS "cake.id", 
+            cakes.name AS "cake.name", 
+            cakes.price AS "cake.price", 
+            cakes.description AS "cake.description", 
+            cakes.image AS "cake.image", 
+            orders.createdAt AS "createdAt", 
+            orders.quantity AS "quantity", 
+            orders.totalPrice AS "totalPrice"
+          FROM 
+            orders 
+            JOIN clients ON orders.clientId = clients.id 
+            JOIN cakes ON orders.cakeId = cakes.id
+            WHERE createdAt = $1;
+          `, [date])
 
             return res.send(ordersByDate).Status(200)
         }
 
-        const allOrders = connectionDB.query('SELECT * FROM orders WHERE createdAt = $1', [date])
-        //Query não feita
+        const allOrders = connectionDB.query(`SELECT 
+        clients.id as "client.id", 
+        clients.name as "client.name", 
+        clients.address as "client.address", 
+        clients.phone as "client.phone", 
+        cakes.id as "cake.id", 
+        cakes.name as "cake.name", 
+        cakes.price as "cake.price", 
+        cakes.description as "cake.description", 
+        cakes.image as "cake.image", 
+        orders.createdAt as "createdAt", 
+        orders.quantity as "quantity", 
+        orders.totalPrice as "totalPrice"
+      FROM 
+        orders 
+        JOIN clients ON orders.clientId = clients.id 
+        JOIN cakes ON orders.cakeId = cakes.id;
+      `)
 
         return res.send(allOrders).Status(200)
 
@@ -44,10 +77,26 @@ export async function OrdersByIdControllers(req, res){
 
     try {
 
-        const ordersById = connectionDB.query('SELECT * FROM orders WHERE id = $1', [id])
-        //Query não feita
+        const ordersById = connectionDB.query(`SELECT 
+        clients.id as "client.id", 
+        clients.name as "client.name", 
+        clients.address as "client.address", 
+        clients.phone as "client.phone", 
+        cakes.id as "cake.id", 
+        cakes.name as "cake.name", 
+        cakes.price as "cake.price", 
+        cakes.description as "cake.description", 
+        cakes.image as "cake.image", 
+        orders.createdAt as "createdAt", 
+        orders.quantity as "quantity", 
+        orders.totalPrice as "totalPrice"
+      FROM 
+        orders 
+        JOIN clients ON orders.clientId = clients.id 
+        JOIN cakes ON orders.cakeId = cakes.id;
+      WHERE id = $1`, [id])
         
-        return res.sendStatus(404)
+        return res.send(ordersById).Status(404)
 
     }catch(err){
         return res.send(err).Status(500);
