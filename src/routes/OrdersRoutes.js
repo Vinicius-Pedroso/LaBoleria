@@ -1,11 +1,11 @@
 import { Router } from "express";
-import {OrdersControllers} from "../controllers/OrdersControllers.js";
-import OrdersValidation from "../middlewares/OrdersValidation.js";
+import {OrdersByIdControllers, OrdersGetControllers, OrdersPostControllers} from "../controllers/OrdersControllers.js";
+import {OrdersGetValidation, OrdersIdValidation, OrdersPostValidation} from "../middlewares/OrdersValidation.js";
 
 const OrdersRouter = Router();
 
-OrdersRouter.post("/order", OrdersValidation, OrdersControllers);
-OrdersRouter.get("/orders", );
-OrdersRouter.get("/orders/:id", );
+OrdersRouter.post("/order", OrdersPostValidation, OrdersPostControllers);
+OrdersRouter.get("/orders", OrdersGetValidation, OrdersGetControllers);
+OrdersRouter.get("/orders/:id", OrdersIdValidation, OrdersByIdControllers);
 
 export default OrdersRouter;
