@@ -1,6 +1,6 @@
 import connectionDB from "../database.js";
 
-export default async function CakesControllers(req, res){
+export async function CakesPostControllers(req, res){
     const {name, email, description, image} = req.body;
 
     try {

@@ -1,6 +1,6 @@
 import connectionDB from "../database.js";
 
-export default async function OrdersControllers(req, res){
+export async function OrdersPostControllers(req, res){
     const {clientId, cakeId , quantity, totalPrice} = req.body;
     const dateNow = now()
 
@@ -15,3 +15,4 @@ export default async function OrdersControllers(req, res){
         return res.send(err).Status(500)
     }
 }
+

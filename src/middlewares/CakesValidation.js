@@ -2,7 +2,7 @@ import cakeSchema from "../schemas/CakesSchema.js";
 import connectionDB from "../database.js";
 
 
-export default async function CakesValidation(req, res, next){
+export async function CakesPostValidation(req, res, next){
     const cakeData = req.body;
     const {name, email} = cakeData;
 

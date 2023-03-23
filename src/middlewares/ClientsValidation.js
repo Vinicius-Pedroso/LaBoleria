@@ -2,7 +2,7 @@ import clientSchema from "../schemas/ClientsSchema.js";
 import connectionDB from "../database.js";
 
 
-export default async function ClientValidation(req, res, next){
+export async function ClientPostValidation(req, res, next){
     const clientData = req.body;
     const {phone} = clientData
 
@@ -23,5 +23,21 @@ export default async function ClientValidation(req, res, next){
         next();
     }catch(err){
         return res.send(err).Status(500);
+    }
+}
+
+export async function ClientOrdersValidation(req, res, next){
+    const {clientId} = req.params.id;
+
+    try {
+        const clientExist = await connectionDB.query('SELECT * FROM clients WHERE id = $1', [clientId])
+        if(!clientExist){
+            return res.sendStatus(404)
+        }
+
+        next()
+
+    }catch(err){
+        return res.send(err).Status(404)
     }
 }

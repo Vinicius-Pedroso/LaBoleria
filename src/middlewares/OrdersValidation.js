@@ -2,7 +2,7 @@ import OrdersSchema from "../schemas/OrdersSchema.js";
 import connectionDB from "../database.js";
 
 
-export default async function OrdersValidation(req, res, next){
+export async function OrdersPostValidation(req, res, next){
     const ordersData = req.body;
     const {clientId, cakeId} = ordersData;
 
@@ -28,4 +28,13 @@ export default async function OrdersValidation(req, res, next){
     }catch(err){
         return res.send(err).Status(500);
     }
+}
+
+export async function OrdersGetValidation (req, res, next){
+    const {date} = req.query.date;
+}
+
+export async function OrdersIdValidation (req, res, next){
+    const {id} = req.params.id;
+
 }

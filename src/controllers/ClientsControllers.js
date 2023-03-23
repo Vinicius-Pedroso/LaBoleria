@@ -1,6 +1,6 @@
 import connectionDB from "../database.js";
 
-export default async function ClientsControllers(req, res){
+export async function ClientsControllers(req, res){
     const {name, address, phone} = req.body;
 
     try {
@@ -13,4 +13,27 @@ export default async function ClientsControllers(req, res){
     } catch(err){
         return res.send(err).Status(500)
     }
+}
+
+export async function ClientOrdersControllers (req, res){
+    const {clientId} = req.params.id;
+
+    try {
+
+        const clientOrders = connectionDB.query(`
+        SELECT 
+        id AS orderId, 
+        quantity, 
+        createdAt, 
+        totalPrice 
+        FROM orders LEFT JOIN name AS cakeName ON orders.cakeId = cakes.id
+        WHERE clientId = $1`
+        [clientId]
+        );
+
+        return res.send(clientOrders).Status(201)
+    }catch (err){
+        return res.send(err).Status(500)
+    }
+
 }
