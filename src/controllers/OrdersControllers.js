@@ -1,27 +1,27 @@
 import connectionDB from "../database.js";
 
-export async function OrdersPostControllers(req, res){
-    const {clientId, cakeId , quantity, totalPrice} = req.body;
+export async function OrdersPostControllers(req, res) {
+    const { clientId, cakeId, quantity, totalPrice } = req.body;
     const dateNow = now()
 
     try {
 
         await connectionDB.query('INSERT INTO orders (clientId, cakeId, quantity, createdAt, totalPrice) VALUES ($1, $2, $3, $4, $5)',
-        [clientId, cakeId, quantity, dateNow, totalPrice]
+            [clientId, cakeId, quantity, dateNow, totalPrice]
         )
         return res.sendStatus(201)
-        
-    } catch(err){
+
+    } catch (err) {
         return res.send(err).Status(500)
     }
 }
 
-export async function OrdersGetControllers(req, res){
-    const {date} = req.query.date;
+export async function OrdersGetControllers(req, res) {
+    const { date } = req.query.date;
 
     try {
 
-        if(date){
+        if (date) {
             const ordersByDate = connectionDB.query(`SELECT 
             clients.id AS "client.id", 
             clients.name AS "client.name", 
@@ -42,7 +42,29 @@ export async function OrdersGetControllers(req, res){
             WHERE createdAt = $1;
           `, [date])
 
-            return res.send(ordersByDate).Status(200)
+            const data = ordersByDate.rows.map(row => {
+                return {
+                    client: {
+                        id: row.client_id,
+                        name: row.client_name,
+                        address: row.client_address,
+                        phone: row.client_phone,
+                    },
+                    cake: {
+                        id: row.cake_id,
+                        name: row.cake_name,
+                        price: row.cake_price,
+                        description: row.cake_description,
+                        image: row.cake_image,
+                    },
+                    createdAt: row.createdat,
+                    quantity: row.quantity,
+                    totalPrice: row.totalprice,
+                };
+            });
+
+
+            return res.send(data).Status(200)
         }
 
         const allOrders = connectionDB.query(`SELECT 
@@ -64,16 +86,38 @@ export async function OrdersGetControllers(req, res){
         JOIN cakes ON orders.cakeId = cakes.id;
       `)
 
-        return res.send(allOrders).Status(200)
+        const dataAllOrders = allOrders.rows.map(row => {
+            return {
+                client: {
+                    id: row.client_id,
+                    name: row.client_name,
+                    address: row.client_address,
+                    phone: row.client_phone,
+                },
+                cake: {
+                    id: row.cake_id,
+                    name: row.cake_name,
+                    price: row.cake_price,
+                    description: row.cake_description,
+                    image: row.cake_image,
+                },
+                createdAt: row.createdat,
+                quantity: row.quantity,
+                totalPrice: row.totalprice,
+            };
+        });
 
-    }catch(err){
+
+        return res.send(dataAllOrders).Status(200)
+
+    } catch (err) {
         return res.send(err).Status(500);
     }
 
 }
 
-export async function OrdersByIdControllers(req, res){
-    const {id} = req.params.id;
+export async function OrdersByIdControllers(req, res) {
+    const { id } = req.params.id;
 
     try {
 
@@ -95,11 +139,32 @@ export async function OrdersByIdControllers(req, res){
         JOIN clients ON orders.clientId = clients.id 
         JOIN cakes ON orders.cakeId = cakes.id;
       WHERE id = $1`, [id])
-        
-        return res.send(ordersById).Status(404)
 
-    }catch(err){
+        const data = ordersById.rows.map(row => {
+            return {
+                client: {
+                    id: row.client_id,
+                    name: row.client_name,
+                    address: row.client_address,
+                    phone: row.client_phone,
+                },
+                cake: {
+                    id: row.cake_id,
+                    name: row.cake_name,
+                    price: row.cake_price,
+                    description: row.cake_description,
+                    image: row.cake_image,
+                },
+                createdAt: row.createdat,
+                quantity: row.quantity,
+                totalPrice: row.totalprice,
+            };
+        });
+
+        return res.send(data).Status(404)
+
+    } catch (err) {
         return res.send(err).Status(500);
     }
-    
+
 }
