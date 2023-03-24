@@ -11,7 +11,7 @@ export async function ClientsControllers(req, res){
         return res.sendStatus(201)
         
     } catch(err){
-        return res.send(err).Status(500)
+        return res.status(500).send(err)
     }
 }
 
@@ -31,9 +31,9 @@ export async function ClientOrdersControllers (req, res){
         [clientId]
         );
 
-        return res.send(clientOrders).Status(201)
+        return res.status(201).send(clientOrders)
     }catch (err){
-        return res.send(err).Status(500)
+        return res.status(500).send(err)
     }
 
 }

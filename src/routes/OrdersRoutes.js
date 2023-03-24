@@ -4,7 +4,7 @@ import {OrdersGetValidation, OrdersIdValidation, OrdersPostValidation} from "../
 
 const OrdersRouter = Router();
 
-OrdersRouter.post("/order", OrdersPostValidation, OrdersPostControllers);
+OrdersRouter.post("/orders", OrdersPostValidation, OrdersPostControllers);
 OrdersRouter.get("/orders", OrdersGetValidation, OrdersGetControllers);
 OrdersRouter.get("/orders/:id", OrdersIdValidation, OrdersByIdControllers);
 

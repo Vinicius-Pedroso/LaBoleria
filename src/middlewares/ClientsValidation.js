@@ -9,8 +9,7 @@ export async function ClientPostValidation(req, res, next){
     const err = clientSchema.validate(clientData, {abortEarly: false});
 
     if (err){
-        const errors = err.details.map((detail) => detail.message);
-        return res.Status(400).send(errors);
+        return res.send(err).status(400);
     }
 
     try {
@@ -22,7 +21,7 @@ export async function ClientPostValidation(req, res, next){
 
         next();
     }catch(err){
-        return res.send(err).Status(500);
+        return res.send(err).status(500);
     }
 }
 
@@ -38,6 +37,6 @@ export async function ClientOrdersValidation(req, res, next){
         next()
 
     }catch(err){
-        return res.send(err).Status(404)
+        return res.send(err).status(404)
     }
 }

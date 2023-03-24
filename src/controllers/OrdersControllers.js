@@ -4,6 +4,9 @@ export async function OrdersPostControllers(req, res) {
     const { clientId, cakeId, quantity, totalPrice } = req.body;
     const dateNow = now()
 
+    console.log("entrou no console")
+    console.log(dateNow)
+
     try {
 
         await connectionDB.query('INSERT INTO orders (clientId, cakeId, quantity, createdAt, totalPrice) VALUES ($1, $2, $3, $4, $5)',
@@ -12,7 +15,7 @@ export async function OrdersPostControllers(req, res) {
         return res.sendStatus(201)
 
     } catch (err) {
-        return res.send(err).Status(500)
+        return res.send(err).status(500)
     }
 }
 
@@ -111,7 +114,7 @@ export async function OrdersGetControllers(req, res) {
         return res.send(dataAllOrders).Status(200)
 
     } catch (err) {
-        return res.send(err).Status(500);
+        return res.send(err).status(500);
     }
 
 }
@@ -161,10 +164,10 @@ export async function OrdersByIdControllers(req, res) {
             };
         });
 
-        return res.send(data).Status(404)
+        return res.status(404).send(data)
 
     } catch (err) {
-        return res.send(err).Status(500);
+        return res.status(500).send(err);
     }
 
 }

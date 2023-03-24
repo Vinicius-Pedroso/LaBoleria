@@ -9,24 +9,29 @@ export async function OrdersPostValidation(req, res, next){
     const err = OrdersSchema.validate(ordersData, {abortEarly: false});
 
     if (err){
-        return res.Status(400).send(errors);
+        console.log(err)
+        console.log("erro no joi")
+        return res.status(400).send(err);
     }
 
     try {
 
         const clientExist = await connectionDB.query('SELECT idd FROM clients WHERE id = $1;', [clientId]);
         if (!clientExist){
+            console.log("No client found")
             return res.sendStatus(404);
+            
         }
 
         const cakeExist = await connectionDB.query('SELECT id FROM cakes WHERE id = $1;', [cakeId]);
         if (!cakeExist){
+            console.log("No cake found")
             return res.sendStatus(404);
         }
 
         next();
     }catch(err){
-        return res.send(err).Status(500);
+        return res.send(err).status(500);
     }
 }
 
@@ -42,7 +47,7 @@ export async function OrdersGetValidation (req, res, next){
 
         next()
     }catch(err){
-        return res.send(err).Status(500);
+        return res.send(err).status(500);
     }
 }
 
@@ -58,6 +63,6 @@ export async function OrdersIdValidation (req, res, next){
 
         next()
     }catch(err){
-        return res.send(err).Status(500);
+        return res.send(err).status(500);
     }
 }

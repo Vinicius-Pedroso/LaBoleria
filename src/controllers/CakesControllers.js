@@ -11,6 +11,6 @@ export async function CakesPostControllers(req, res){
         return res.sendStatus(201)
         
     } catch(err){
-        return res.send(err).Status(500)
+        return res.send(err).status(500)
     }
 }
