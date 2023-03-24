@@ -4,13 +4,13 @@ import connectionDB from "../database.js";
 
 export async function CakesPostValidation(req, res, next){
     const cakeData = req.body;
-    const {name, email} = cakeData;
+    const {name, image} = cakeData;
 
     const err = cakeSchema.validate(cakeData, {abortEarly: false});
 
     if (err){
         const errors = err.details.map((detail) => detail.message);
-        if(email){
+        if(image){
             return res.Status(422).send(errors);
         }
         return res.Status(400).send(errors);
