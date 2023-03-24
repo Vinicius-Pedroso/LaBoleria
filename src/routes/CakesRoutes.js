@@ -4,6 +4,6 @@ import {CakesPostValidation} from "../middlewares/CakesValidation.js";
 
 const CakesRouter = Router();
 
-CakesRouter.post("/cakes", CakesPostValidation, CakesPostControllers);
-
+CakesRouter.post("/cakes", CakesPostControllers);
+// CakesPostValidation - problema de schema
 export default CakesRouter;

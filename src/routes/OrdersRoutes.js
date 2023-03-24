@@ -4,8 +4,9 @@ import {OrdersGetValidation, OrdersIdValidation, OrdersPostValidation} from "../
 
 const OrdersRouter = Router();
 
-OrdersRouter.post("/orders", OrdersPostValidation, OrdersPostControllers);
+OrdersRouter.post("/orders", OrdersPostControllers);
 OrdersRouter.get("/orders", OrdersGetValidation, OrdersGetControllers);
 OrdersRouter.get("/orders/:id", OrdersIdValidation, OrdersByIdControllers);
+//OrdersPostValidation - problema de schema
 
 export default OrdersRouter;

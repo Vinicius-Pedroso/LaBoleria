@@ -6,12 +6,12 @@ export async function OrdersPostValidation(req, res, next){
     const ordersData = req.body;
     const {clientId, cakeId} = ordersData;
 
-    const err = OrdersSchema.validate(ordersData, {abortEarly: false});
+    const {error} = OrdersSchema.validate(ordersData, {abortEarly: false});
 
-    if (err){
-        console.log(err)
-        console.log("erro no joi")
-        return res.status(400).send(err);
+    if (error){
+        console.log(error)
+        console.log("erroro no joi")
+        return res.status(400).send(error);
     }
 
     try {

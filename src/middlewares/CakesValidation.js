@@ -2,25 +2,26 @@ import cakeSchema from "../schemas/CakesSchema.js";
 import connectionDB from "../database.js";
 
 
-export async function CakesPostValidation(req, res, next){
+export async function CakesPostValidation(schema){
 
-    console.log("entrou no cake validation")
-    
     const cakeData = req.body;
     const {name, image} = cakeData;
 
-    const err = cakeSchema.validate(cakeData, {abortEarly: false});
+    // console.log(cakeData)
 
-    if (err){
-        console.log(err)
+    const error = cakeSchema.validate(cakeData, {abortEarly: false});
+    console.log(error)
+
+    if (error){
         if(!image){
-            console.log("erro na imagem")
-            return res.status(422).send(err);
+            // console.log("erro na imagem")
+            return res.status(422).send(error);
         }
-        return res.status(400).send(err);
+        return res.status(400).send(error);
     }
     try {
 
+        // console.log("entrou no try")
         const nameExist = await connectionDB.query('SELECT name FROM cakes WHERE name = $1;', [name]);
         if (nameExist){
             return res.sendStatus(409);
