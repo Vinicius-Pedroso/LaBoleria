@@ -3,6 +3,7 @@ import connectionDB from "../database.js";
 
 
 export async function CakesPostValidation(req, res, next){
+    
     const cakeData = req.body;
     const {name, image} = cakeData;
 
@@ -15,7 +16,7 @@ export async function CakesPostValidation(req, res, next){
         }
         return res.Status(400).send(errors);
     }
-
+    //erro 400
     try {
 
         const nameExist = await connectionDB.query('SELECT name FROM cakes WHERE name = $1;', [name]);
