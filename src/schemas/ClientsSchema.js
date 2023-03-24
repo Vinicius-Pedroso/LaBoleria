@@ -1,9 +1,9 @@
 import joi from 'joi';
 
 const ClientSchema = joi.object({
-    name: string().min(3).required(),
-    addredd: string().min(3).required(),
-    phone: string().min(10).Max(11).required()
+    name: joi.string().min(3).required(),
+    addredd: joi.string().min(3).required(),
+    phone: joi.string().min(10).max(11).required()
 });
 
 export default ClientSchema;
